@@ -16,7 +16,13 @@ public class HomePage {
         TestBase.driver = ldriver;
         PageFactory.initElements(ldriver, this);
     }
+    private AccountPage account;
+    private SignInPage signIn;
+    private void pageObject() {
 
+        account = new AccountPage(TestBase.driver);
+        signIn = new SignInPage(TestBase.driver);
+    }
     private static Logger logger = Logger.getLogger(HomePage.class);
 
     @FindBy(xpath = "//span[@id='nav-link-accountList-nav-line-1']/ancestor::a")
@@ -115,5 +121,47 @@ public class HomePage {
     }
     public void navigateHomePage(){
         TestBase.navigateToURL("https://www.amazon.com");
+    }
+
+    public void loginFonctionalities(String email, String password){
+        pageObject();
+        if(email.equalsIgnoreCase("sadoumenad@gmail.com")&& password.equalsIgnoreCase("")){
+           locateAccountAndList();
+            mouseHouverClick();
+            account.clickLoginAndSecurity();
+            signIn.typeInEmailBox(email);
+            signIn.clickContinueButton();
+            signIn.typePassword(password);
+            signIn.clickSigInButton();
+            signIn.clickDoneButton();
+            account.loginValidation();
+        }
+        else if(email.equalsIgnoreCase("sadoumenad@gmail.com")&& password.equalsIgnoreCase("12354")){
+            locateAccountAndList();
+            mouseHouverClick();
+            account.clickLoginAndSecurity();
+            signIn.typeInEmailBox(email);
+            signIn.clickContinueButton();
+            signIn.typePassword(password);
+            signIn.clickSigInButton();
+            signIn.validationWrongPassword();
+        }
+        else if(email.equalsIgnoreCase("sadme@gmail.com")&& password.equalsIgnoreCase("12354")){
+            locateAccountAndList();
+            mouseHouverClick();
+            account.clickLoginAndSecurity();
+            signIn.typeInEmailBox(email);
+            signIn.clickContinueButton();
+            signIn.vlaidationWrongUsernam();
+        }
+        else if(email.equalsIgnoreCase("sadme@gmail.com")&& password.equalsIgnoreCase("")){
+            locateAccountAndList();
+            mouseHouverClick();
+            account.clickLoginAndSecurity();
+            signIn.typeInEmailBox(email);
+            signIn.clickContinueButton();
+            signIn.vlaidationWrongUsernam();
+        }
+
     }
 }

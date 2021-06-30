@@ -1,10 +1,8 @@
 package com.amazon.tests;
 
 import com.amazon.data.DataProviders;
-import com.amazon.pages.AccountPage;
 import com.amazon.pages.HomePage;
 import com.amazon.pages.ProductPage;
-import com.amazon.pages.SignInPage;
 import com.comerce.base.ConnectDB;
 import com.comerce.base.TestBase;
 import org.testng.annotations.BeforeMethod;
@@ -14,17 +12,11 @@ import java.util.ArrayList;
 
 public class SearchItems extends TestBase {
     private HomePage homePage;
-    private Login login;
-    private AccountPage account;
-    private SignInPage signIn;
     private ProductPage product;
 
     @BeforeMethod
     private void pagesObject() {
         homePage = new HomePage(driver);
-        login = new Login();
-        account = new AccountPage(driver);
-        signIn = new SignInPage(driver);
         product = new ProductPage(driver);
     }
 
@@ -52,7 +44,7 @@ public class SearchItems extends TestBase {
 
     @Test(enabled = false, dataProvider = "searchCustData", dataProviderClass = DataProviders.class)//17
     public void validateRegistredCustmerCanSearchItme(String email, String password, String item) {
-        login.userLoginAction(homePage, account, signIn, email, password);
+        homePage.loginFonctionalities(email, password);
         preformSearchAction(homePage, item);
 
     }
@@ -61,7 +53,7 @@ public class SearchItems extends TestBase {
     public void validateRegistredCustmerCanSearchItmesFromDb() {
         ArrayList<String> items = ConnectDB.connectToDbAndGetDtata("select * from items", "itemname");
         ArrayList<String> users = ConnectDB.connectToDbAndGetDtata("select * from amazon", "email", "password");
-        login.userLoginAction(homePage, account, signIn, users.get(0), users.get(1));
+        homePage.loginFonctionalities(users.get(0), users.get(1));
         for (int i = 0; i < items.size(); i++) {
             preformSearchAction(homePage, items.get(i));
             homePage.clearSearchBox();

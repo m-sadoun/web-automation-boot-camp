@@ -44,6 +44,7 @@ public class ProductPage {
     public void clickOnAddToCart(){
         Assert.assertTrue(addToCart.isDisplayed(),"is not dispalyed");
         addToCart.click();
+        TestBase.sleepFor(2);
         noThanks.click();
         if(proceed.isDisplayed()){
             close.click();
